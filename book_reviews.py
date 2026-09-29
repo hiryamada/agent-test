@@ -7,11 +7,6 @@ import os
 import sys
 from collections.abc import Sequence
 
-from azure.ai.agents.models import BingGroundingTool, MessageRole
-from azure.ai.projects import AIProjectClient
-from azure.identity import DefaultAzureCredential
-
-
 def build_review_prompt(title: str, author: str | None = None) -> str:
     """Build a Japanese research prompt for the specified book."""
     book = f"「{title}」"
@@ -57,6 +52,10 @@ def analyze_book(title: str, author: str | None = None) -> str:
     endpoint = _required_environment("PROJECT_ENDPOINT")
     deployment = _required_environment("MODEL_DEPLOYMENT_NAME")
     connection_name = _required_environment("BING_CONNECTION_NAME")
+
+    from azure.ai.agents.models import BingGroundingTool, MessageRole
+    from azure.ai.projects import AIProjectClient
+    from azure.identity import DefaultAzureCredential
 
     credential = DefaultAzureCredential()
     project_client = AIProjectClient(endpoint=endpoint, credential=credential)
